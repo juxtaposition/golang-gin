@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-    "net/http"
+	"net/http"
+	"routerEze"
     "github.com/gin-gonic/contrib/static"
     "github.com/gin-gonic/gin"
 )
+
+type Person struct {
+	name string
+	age int
+}
 
 func main() {
 // Making the router
@@ -26,6 +32,10 @@ c.JSON(http.StatusOK, gin.H {
 })
 })
 }
+
+pepito := routerEze.Person{}
+fmt.Println(pepito.SayHello("hola"))
+
 
 router.Run(":3000")
 
