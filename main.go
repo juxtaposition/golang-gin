@@ -3,17 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
+	"routerEze"
 	"os/signal"
 	"net/http"
-	"routerEze"
     "github.com/gin-gonic/contrib/static"
     "github.com/gin-gonic/gin"
 )
-
-type Person struct {
-	name string
-	age int
-}
 
 func main() {
 // Making the router
@@ -32,22 +27,21 @@ c.JSON(http.StatusOK, gin.H {
 })
 })
 }
+reciveData := make (chan string, 1)
 
-pepito := routerEze.Person{}
-fmt.Println(pepito.SayHello("hola"))
+sendToChannel := routerEze.MyChan{Channel: reciveData}
 
+sendToChannel.SendData("Just Nothing")
+fmt.Println(<-sendToChannel.Channel)
+
+pepito := routerEze.Person{ Name: "Teresa", Age: 29}
+fmt.Println(pepito.SayHello("Hello "))
 
 router.Run(":3000")
 
-// Set up channel on which to send signal notifications.
-	// We must use a buffered channel or risk missing the signal
-	// if we're not ready to receive when the signal is sent.
 	c := make(chan os.Signal, 1)
 
-	// Passing no signals to Notify means that
-	// all signals will be sent to the channel.
 	signal.Notify(c, os.Interrupt)
-	// Block until any signal is received.
 	s := <-c
 	fmt.Println("Got signal:", s)
 	os.Exit(0)
